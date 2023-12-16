@@ -1,0 +1,219 @@
+[
+  {
+    "Statement": "Who won the FIFA World Cup in 2010?",
+    "Option1": "Spain",
+    "Option2": "Germany",
+    "Option3": "Netherlands",
+    "CorrectAnswer": "Spain"
+  },
+  {
+    "Statement": "Which player has the most goals in a single Premier League season?",
+    "Option1": "Mohamed Salah",
+    "Option2": "Thierry Henry",
+    "Option3": "Alan Shearer",
+    "CorrectAnswer": "Mohamed Salah"
+  },
+  {
+    "Statement": "Which team has won the most UEFA Champions League titles?",
+    "Option1": "Real Madrid",
+    "Option2": "Bayern Munich",
+    "Option3": "AC Milan",
+    "CorrectAnswer": "Real Madrid"
+  },
+  {
+    "Statement": "Who is the youngest player to score in a FIFA World Cup?",
+    "Option1": "Kylian Mbappe",
+    "Option2": "Michael Owen",
+    "Option3": "Pele",
+    "CorrectAnswer": "Michael Owen"
+  },
+  {
+    "Statement": "Which country hosted the 2014 FIFA World Cup?",
+    "Option1": "Brazil",
+    "Option2": "Germany",
+    "Option3": "Russia",
+    "CorrectAnswer": "Brazil"
+  },
+  {
+    "Statement": "Which player has the most assists in the history of the Premier League?",
+    "Option1": "Ryan Giggs",
+    "Option2": "Cesc Fabregas",
+    "Option3": "David Beckham",
+    "CorrectAnswer": "Ryan Giggs"
+  },
+  {
+    "Statement": "Who was the top scorer in the 2020-2021 UEFA Champions League season?",
+    "Option1": "Robert Lewandowski",
+    "Option2": "Lionel Messi",
+    "Option3": "Neymar",
+    "CorrectAnswer": "Robert Lewandowski"
+  },
+  {
+    "Statement": "Which nation has won the most Copa America titles?",
+    "Option1": "Brazil",
+    "Option2": "Argentina",
+    "Option3": "Uruguay",
+    "CorrectAnswer": "Uruguay"
+  },
+  {
+    "Statement": "Who won the European Championship in 2016?",
+    "Option1": "Portugal",
+    "Option2": "France",
+    "Option3": "Germany",
+    "CorrectAnswer": "Portugal"
+  },
+  {
+    "Statement": "Which player holds the record for the most goals scored in a single FIFA World Cup tournament?",
+    "Option1": "Just Fontaine",
+    "Option2": "Gerd Muller",
+    "Option3": "Ronaldo",
+    "CorrectAnswer": "Just Fontaine"
+  },
+  {
+    "Statement": "Which club has the most consecutive English top-flight league titles?",
+    "Option1": "Manchester United",
+    "Option2": "Liverpool",
+    "Option3": "Arsenal",
+    "CorrectAnswer": "Manchester United"
+  },
+  {
+    "Statement": "Who was the first African player to win the FIFA Ballon d'Or?",
+    "Option1": "George Weah",
+    "Option2": "Didier Drogba",
+    "Option3": "Samuel Eto'o",
+    "CorrectAnswer": "George Weah"
+  },
+  {
+    "Statement": "Which player has the most appearances in the history of the Premier League?",
+    "Option1": "Gareth Barry",
+    "Option2": "Ryan Giggs",
+    "Option3": "David James",
+    "CorrectAnswer": "Ryan Giggs"
+  },
+  {
+    "Statement": "Which team won the most consecutive Serie A titles?",
+    "Option1": "Juventus",
+    "Option2": "AC Milan",
+    "Option3": "Inter Milan",
+    "CorrectAnswer": "Juventus"
+  },
+  {
+    "Statement": "Who was the top scorer in the 2018 FIFA World Cup?",
+    "Option1": "Harry Kane",
+    "Option2": "Kylian Mbappe",
+    "Option3": "Cristiano Ronaldo",
+    "CorrectAnswer": "Harry Kane"
+  },
+  {
+    "Statement": "Which country won the UEFA European Championship in 2008?",
+    "Option1": "Spain",
+    "Option2": "Germany",
+    "Option3": "Italy",
+    "CorrectAnswer": "Spain"
+  },
+  {
+    "Statement": "Who holds the record for the fastest hat-trick in the Premier League?",
+    "Option1": "Sergio Aguero",
+    "Option2": "Robbie Fowler",
+    "Option3": "Andy Cole",
+    "CorrectAnswer": "Sergio Aguero"
+  },
+  {
+    "Statement": "Which nation won the first-ever FIFA World Cup in 1930?",
+    "Option1": "Uruguay",
+    "Option2": "Argentina",
+    "Option3": "Brazil",
+    "CorrectAnswer": "Uruguay"
+  },
+  {
+    "Statement": "Who scored the 'Hand of God' goal in the 1986 FIFA World Cup?",
+    "Option1": "Diego Maradona",
+    "Option2": "Ronaldo",
+    "Option3": "Zinedine Zidane",
+    "CorrectAnswer": "Diego Maradona"
+  },
+  {
+    "Statement": "Which club won the first Premier League title in 1992-1993?",
+    "Option1": "Blackburn Rovers",
+    "Option2": "Manchester United",
+    "Option3": "Liverpool",
+    "CorrectAnswer": "Blackburn Rovers"
+  },
+  {
+    "Statement": "Who is the oldest player to score in a FIFA World Cup?",
+    "Option1": "Roger Milla",
+    "Option2": "Miroslav Klose",
+    "Option3": "Paolo Rossi",
+    "CorrectAnswer": "Roger Milla"
+  },
+  {
+    "Statement": "Which player has the most assists in the history of La Liga?",
+    "Option1": "Andres Iniesta",
+    "Option2": "Xavi Hernandez",
+    "Option3": "Lionel Messi",
+    "CorrectAnswer": "Lionel Messi"
+  },
+  {
+    "Statement": "Which nation won the 2019 Copa America?",
+    "Option1": "Brazil",
+    "Option2": "Argentina",
+    "Option3": "Chile",
+    "CorrectAnswer": "Brazil"
+  },
+  {
+    "Statement": "Who is the youngest player to debut in the Premier League?",
+    "Option1": "Reece Oxford",
+    "Option2": "Freddy Adu",
+    "Option3": "Theo Walcott",
+    "CorrectAnswer": "Theo Walcott"
+  },
+  {
+    "Statement": "Which team won the most consecutive Bundesliga titles?",
+    "Option1": "Bayern Munich",
+    "Option2": "Borussia Dortmund",
+    "Option3": "Werder Bremen",
+    "CorrectAnswer": "Bayern Munich"
+  },
+  {
+    "Statement": "Who was the first player to score in seven consecutive UEFA Champions League matches?",
+    "Option1": "Cristiano Ronaldo",
+    "Option2": "Lionel Messi",
+    "Option3": "Raul",
+    "CorrectAnswer": "Cristiano Ronaldo"
+  },
+  {
+    "Statement": "Which country won the 2004 UEFA European Championship?",
+    "Option1": "Greece",
+    "Option2": "Portugal",
+    "Option3": "France",
+    "CorrectAnswer": "Greece"
+  },
+  {
+    "Statement": "Who holds the record for the most goals scored in a single UEFA Champions League season?",
+    "Option1": "Cristiano Ronaldo",
+    "Option2": "Lionel Messi",
+    "Option3": "Robert Lewandowski",
+    "CorrectAnswer": "Robert Lewandowski"
+  },
+  {
+    "Statement": "Which club won the most Copa Libertadores titles?",
+    "Option1": "Boca Juniors",
+    "Option2": "River Plate",
+    "Option3": "Sao Paulo",
+    "CorrectAnswer": "Boca Juniors"
+  },
+  {
+    "Statement": "Which player has scored the most goals for the Brazilian national team?",
+    "Option1": "Ronaldo",
+    "Option2": "Pele",
+    "Option3": "Romario",
+    "CorrectAnswer": "Pele"
+  },
+  {
+    "Statement": "Which team won the most FA Cup titles?",
+    "Option1": "Manchester United",
+    "Option2": "Arsenal",
+    "Option3": "Chelsea",
+    "CorrectAnswer": "Arsenal"
+  }
+]
