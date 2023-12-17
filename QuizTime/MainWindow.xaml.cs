@@ -42,20 +42,20 @@ namespace QuizTime
                 string appDataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 string jsonFilePath = System.IO.Path.Combine(appDataFolderPath, appName);
 
-
+                // Check if the JSON file doesn't exist in the local app data folder
                 if (!File.Exists(jsonFilePath))
                 {
-
+                    // Specify the path of the source JSON file to copy
                     string sourceFilePath = @"C:\Users\Philip\source\repos\QuizTime\QuizTime\MyQuizGame.json";
 
 
-
+                    // Copy the source file to the local app data folder
                     System.IO.File.Copy(sourceFilePath, jsonFilePath);
 
-                    ///////////
+                    // Now the file should exist in the local app data folder
                 }
 
-
+                // Proceed with loading the quiz
                 string jsonData = File.ReadAllText(jsonFilePath);
                 List<Question> questions = System.Text.Json.JsonSerializer.Deserialize<List<Question>>(jsonData);
 
@@ -112,6 +112,7 @@ namespace QuizTime
                 string jsonData = File.ReadAllText(destinationFilePath);
                 List<Question> questions = System.Text.Json.JsonSerializer.Deserialize<List<Question>>(jsonData);
 
+
                 QuizTime.DataModel.Quiz quiz = new QuizTime.DataModel.Quiz();
                 foreach (var question in questions)
                 {
@@ -143,7 +144,6 @@ namespace QuizTime
                 Console.WriteLine("Error loading quiz for editing: " + ex.Message);
             }
         }
-
 
 
         private void QuizWindow_Closed(object sender, EventArgs e)
