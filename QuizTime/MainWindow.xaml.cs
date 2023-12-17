@@ -39,22 +39,23 @@ namespace QuizTime
             try
             {
                 string appName = "MyQuizGame.json";
+                string appDataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                string jsonFilePath = System.IO.Path.Combine(appDataFolderPath, appName);
 
-                // Get the base directory of the application
-                string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-                // Combine the base directory with the relative path to the JSON file
-                string jsonFilePath = System.IO.Path.Combine(baseDirectory, appName);
-
-                // Check if the JSON file doesn't exist in the application directory
                 if (!File.Exists(jsonFilePath))
                 {
-                    MessageBox.Show("Quiz file not found!");
-                    Console.WriteLine("Quiz file not found at: " + jsonFilePath);
-                    return;
+
+                    string sourceFilePath = @"C:\Users\Philip\source\repos\QuizTime\QuizTime\MyQuizGame.json";
+
+
+
+                    System.IO.File.Copy(sourceFilePath, jsonFilePath);
+
+
                 }
 
-                // Proceed with loading the quiz
+
                 string jsonData = File.ReadAllText(jsonFilePath);
                 List<Question> questions = System.Text.Json.JsonSerializer.Deserialize<List<Question>>(jsonData);
 
@@ -93,49 +94,56 @@ namespace QuizTime
 
 
 
-
         private void EditQuiz_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 string appName = "MyQuizGame.json";
-                string appDataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                string jsonFilePath = System.IO.Path.Combine(appDataFolderPath, appName);
+                string sourceFilePath = @"C:\Users\Philip\source\repos\QuizTime\QuizTime\" + appName;
+                string destinationFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
-                if (File.Exists(jsonFilePath))
+                string destinationFilePath = System.IO.Path.Combine(destinationFolderPath, appName);
+
+                if (!File.Exists(destinationFilePath))
                 {
-                    string jsonData = File.ReadAllText(jsonFilePath);
-                    List<Question> questions = JsonConvert.DeserializeObject<List<Question>>(jsonData);
-
-                    EditQuiz editQuiz = new EditQuiz();
-                    editQuiz.LoadQuestions();
-
-                    Window editWindow = new Window
-                    {
-                        Title = "Edit Quiz",
-                        Content = editQuiz,
-                        Width = 800,
-                        Height = 450,
-                        WindowStartupLocation = WindowStartupLocation.CenterScreen
-                    };
-
-                    editWindow.Closed += EditWindow_Closed;
-
-                    this.Hide();
-                    editWindow.Show();
+                    File.Copy(sourceFilePath, destinationFilePath);
                 }
-                else
+
+                string jsonData = File.ReadAllText(destinationFilePath);
+                List<Question> questions = System.Text.Json.JsonSerializer.Deserialize<List<Question>>(jsonData);
+
+                QuizTime.DataModel.Quiz quiz = new QuizTime.DataModel.Quiz();
+                foreach (var question in questions)
                 {
-                    MessageBox.Show("Quiz file not found!");
-                    Console.WriteLine("Quiz file not found at: " + jsonFilePath);
+                    quiz.AddQuestion(question.Statement, question.CorrectAnswer, question.Option1, question.Option2, question.Option3);
                 }
+
+                Console.WriteLine("Quiz loaded successfully for editing!");
+
+                EditQuiz editQuiz = new EditQuiz();
+                editQuiz.LoadQuestions();
+
+                Window editWindow = new Window
+                {
+                    Title = "Edit Quiz",
+                    Content = editQuiz,
+                    Width = 800,
+                    Height = 450,
+                    WindowStartupLocation = WindowStartupLocation.CenterScreen
+                };
+
+                editWindow.Closed += EditWindow_Closed;
+
+                Hide();
+                editWindow.Show();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error loading quiz: " + ex.Message);
-                Console.WriteLine("Error loading quiz: " + ex.Message);
+                MessageBox.Show("Error loading quiz for editing: " + ex.Message);
+                Console.WriteLine("Error loading quiz for editing: " + ex.Message);
             }
         }
+
 
 
         private void QuizWindow_Closed(object sender, EventArgs e)
