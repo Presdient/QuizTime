@@ -42,52 +42,47 @@ namespace QuizTime
                 string appDataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 string jsonFilePath = System.IO.Path.Combine(appDataFolderPath, appName);
 
+
                 if (!File.Exists(jsonFilePath))
                 {
-                    if (!Directory.Exists(appDataFolderPath))
-                    {
-                        Directory.CreateDirectory(appDataFolderPath);
 
-                        string sourceFilePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MyQuizGame.json");
-                        System.IO.File.Copy(sourceFilePath, jsonFilePath, true);
-                    }
+                    string sourceFilePath = @"C:\Users\Philip\source\repos\QuizTime\QuizTime\MyQuizGame.json";
+
+
+
+                    System.IO.File.Copy(sourceFilePath, jsonFilePath);
+
+
                 }
 
-                if (File.Exists(jsonFilePath))
+
+                string jsonData = File.ReadAllText(jsonFilePath);
+                List<Question> questions = System.Text.Json.JsonSerializer.Deserialize<List<Question>>(jsonData);
+
+                QuizTime.DataModel.Quiz quiz = new QuizTime.DataModel.Quiz();
+                foreach (var question in questions)
                 {
-                    string jsonData = File.ReadAllText(jsonFilePath);
-                    List<Question> questions = System.Text.Json.JsonSerializer.Deserialize<List<Question>>(jsonData);
-
-                    QuizTime.DataModel.Quiz quiz = new QuizTime.DataModel.Quiz();
-                    foreach (var question in questions)
-                    {
-                        quiz.AddQuestion(question.Statement, question.CorrectAnswer, question.Option1, question.Option2, question.Option3);
-                    }
-
-                    Console.WriteLine("Quiz loaded successfully!");
-
-                    PlayQuiz playQuiz = new PlayQuiz();
-                    playQuiz.LoadQuiz(quiz);
-
-                    Window quizWindow = new Window
-                    {
-                        Title = "PlayQuiz",
-                        Content = playQuiz,
-                        Width = 800,
-                        Height = 450,
-                        WindowStartupLocation = WindowStartupLocation.CenterScreen
-                    };
-
-                    quizWindow.Closed += QuizWindow_Closed;
-
-                    this.Hide();
-                    quizWindow.Show();
+                    quiz.AddQuestion(question.Statement, question.CorrectAnswer, question.Option1, question.Option2, question.Option3);
                 }
-                else
+
+                Console.WriteLine("Quiz loaded successfully!");
+
+                PlayQuiz playQuiz = new PlayQuiz();
+                playQuiz.LoadQuiz(quiz);
+
+                Window quizWindow = new Window
                 {
-                    MessageBox.Show("Quiz file not found!");
-                    Console.WriteLine("Quiz file not found at: " + jsonFilePath);
-                }
+                    Title = "PlayQuiz",
+                    Content = playQuiz,
+                    Width = 800,
+                    Height = 450,
+                    WindowStartupLocation = WindowStartupLocation.CenterScreen
+                };
+
+                quizWindow.Closed += QuizWindow_Closed;
+
+                this.Hide();
+                quizWindow.Show();
             }
             catch (Exception ex)
             {
@@ -95,6 +90,8 @@ namespace QuizTime
                 Console.WriteLine("Error loading quiz: " + ex.Message);
             }
         }
+
+
 
 
         private void EditQuiz_Click(object sender, RoutedEventArgs e)
