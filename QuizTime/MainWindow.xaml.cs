@@ -39,23 +39,22 @@ namespace QuizTime
             try
             {
                 string appName = "MyQuizGame.json";
-                string appDataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                string jsonFilePath = System.IO.Path.Combine(appDataFolderPath, appName);
 
+                // Get the base directory of the application
+                string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
+                // Combine the base directory with the relative path to the JSON file
+                string jsonFilePath = System.IO.Path.Combine(baseDirectory, appName);
+
+                // Check if the JSON file doesn't exist in the application directory
                 if (!File.Exists(jsonFilePath))
                 {
-
-                    string sourceFilePath = @"C:\Users\Philip\source\repos\QuizTime\QuizTime\MyQuizGame.json";
-
-
-
-                    System.IO.File.Copy(sourceFilePath, jsonFilePath);
-
-
+                    MessageBox.Show("Quiz file not found!");
+                    Console.WriteLine("Quiz file not found at: " + jsonFilePath);
+                    return;
                 }
 
-
+                // Proceed with loading the quiz
                 string jsonData = File.ReadAllText(jsonFilePath);
                 List<Question> questions = System.Text.Json.JsonSerializer.Deserialize<List<Question>>(jsonData);
 
@@ -90,6 +89,7 @@ namespace QuizTime
                 Console.WriteLine("Error loading quiz: " + ex.Message);
             }
         }
+
 
 
 
