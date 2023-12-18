@@ -234,7 +234,7 @@ namespace QuizTime
             }
             else if (result == MessageBoxResult.No)
             {
-                Window.GetWindow(this).Close();
+                
             }
         }
 
