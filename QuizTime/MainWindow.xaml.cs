@@ -38,7 +38,7 @@ namespace QuizTime
         {
             try
             {
-                string sourceFilePath = @"C:\Users\Philip\source\repos\QuizTime\QuizTime\MyQuizGame.json";
+                string sourceFilePath = @"C:\Users\Philip\source\repos\QuizTime\QuizTime\MyQuizGame.json"; // Ensure this points to the correct JSON file
                 string destinationFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 string destinationFilePath = System.IO.Path.Combine(destinationFolderPath, "MyQuizGame.json");
 
@@ -49,30 +49,39 @@ namespace QuizTime
                 }
 
                 string jsonData = File.ReadAllText(destinationFilePath);
-                List<Question> questions = System.Text.Json.JsonSerializer.Deserialize<List<Question>>(jsonData);
 
-                quiz = new Quiz();
-                foreach (var question in questions)
+                // Check if the JSON data is valid and not empty
+                if (!string.IsNullOrWhiteSpace(jsonData))
                 {
-                    quiz.AddQuestion(question.Statement, question.CorrectAnswer, question.Option1, question.Option2, question.Option3);
+                    List<Question> questions = JsonConvert.DeserializeObject<List<Question>>(jsonData);
+
+                    quiz = new Quiz();
+                    foreach (var question in questions)
+                    {
+                        quiz.AddQuestion(question.Statement, question.CorrectAnswer, question.Option1, question.Option2, question.Option3);
+                    }
+
+                    PlayQuiz playQuiz = new PlayQuiz();
+                    playQuiz.LoadQuiz(quiz);
+
+                    quizWindow = new Window
+                    {
+                        Title = "PlayQuiz",
+                        Content = playQuiz,
+                        Width = 800,
+                        Height = 450,
+                        WindowStartupLocation = WindowStartupLocation.CenterScreen
+                    };
+
+                    quizWindow.Closed += QuizWindow_Closed;
+
+                    Hide();
+                    quizWindow.Show();
                 }
-
-                PlayQuiz playQuiz = new PlayQuiz();
-                playQuiz.LoadQuiz(quiz);
-
-                quizWindow = new Window
+                else
                 {
-                    Title = "PlayQuiz",
-                    Content = playQuiz,
-                    Width = 800,
-                    Height = 450,
-                    WindowStartupLocation = WindowStartupLocation.CenterScreen
-                };
-
-                quizWindow.Closed += QuizWindow_Closed;
-
-                Hide();
-                quizWindow.Show();
+                    MessageBox.Show("Quiz file is empty or contains invalid JSON data.");
+                }
             }
             catch (Exception ex)
             {
@@ -96,30 +105,39 @@ namespace QuizTime
                 }
 
                 string jsonData = File.ReadAllText(destinationFilePath);
-                List<Question> questions = System.Text.Json.JsonSerializer.Deserialize<List<Question>>(jsonData);
 
-                quiz = new Quiz();
-                foreach (var question in questions)
+                // Check if the JSON data is valid and not empty
+                if (!string.IsNullOrWhiteSpace(jsonData))
                 {
-                    quiz.AddQuestion(question.Statement, question.CorrectAnswer, question.Option1, question.Option2, question.Option3);
+                    List<Question> questions = System.Text.Json.JsonSerializer.Deserialize<List<Question>>(jsonData);
+
+                    quiz = new Quiz();
+                    foreach (var question in questions)
+                    {
+                        quiz.AddQuestion(question.Statement, question.CorrectAnswer, question.Option1, question.Option2, question.Option3);
+                    }
+
+                    EditQuiz editQuiz = new EditQuiz();
+                    editQuiz.LoadQuestions();
+
+                    Window editWindow = new Window
+                    {
+                        Title = "Edit Quiz",
+                        Content = editQuiz,
+                        Width = 800,
+                        Height = 450,
+                        WindowStartupLocation = WindowStartupLocation.CenterScreen
+                    };
+
+                    editWindow.Closed += EditWindow_Closed;
+
+                    Hide();
+                    editWindow.Show();
                 }
-
-                EditQuiz editQuiz = new EditQuiz();
-                editQuiz.LoadQuestions();
-
-                Window editWindow = new Window
+                else
                 {
-                    Title = "Edit Quiz",
-                    Content = editQuiz,
-                    Width = 800,
-                    Height = 450,
-                    WindowStartupLocation = WindowStartupLocation.CenterScreen
-                };
-
-                editWindow.Closed += EditWindow_Closed;
-
-                Hide();
-                editWindow.Show();
+                    MessageBox.Show("Quiz file is empty or contains invalid JSON data.");
+                }
             }
             catch (Exception ex)
             {
@@ -127,6 +145,7 @@ namespace QuizTime
                 Console.WriteLine("Error loading quiz for editing: " + ex.Message);
             }
         }
+
 
         private void QuizWindow_Closed(object sender, EventArgs e)
         {
