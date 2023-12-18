@@ -38,34 +38,24 @@ namespace QuizTime
         {
             try
             {
-                string appName = "MyQuizGame.json";
-                string appDataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                string jsonFilePath = System.IO.Path.Combine(appDataFolderPath, appName);
+                string sourceFilePath = @"C:\Users\Philip\source\repos\QuizTime\QuizTime\MyQuizGame.json";
+                string destinationFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                string destinationFilePath = System.IO.Path.Combine(destinationFolderPath, "MyQuizGame.json");
 
-                // Check if the JSON file doesn't exist in the local app data folder
-                if (!File.Exists(jsonFilePath))
+                if (!File.Exists(destinationFilePath))
                 {
-                    // Specify the path of the source JSON file to copy
-                    string sourceFilePath = @"C:\Users\Philip\source\repos\QuizTime\QuizTime\MyQuizGame.json";
-
-
-                    // Copy the source file to the local app data folder
-                    System.IO.File.Copy(sourceFilePath, jsonFilePath);
-
-                    // Now the file should exist in the local app data folder
+                    File.Copy(sourceFilePath, destinationFilePath);
                 }
 
-                // Proceed with loading the quiz
-                string jsonData = File.ReadAllText(jsonFilePath);
+                string jsonData = File.ReadAllText(destinationFilePath);
                 List<Question> questions = System.Text.Json.JsonSerializer.Deserialize<List<Question>>(jsonData);
 
-                QuizTime.DataModel.Quiz quiz = new QuizTime.DataModel.Quiz();
+
+                Quiz quiz = new Quiz();
                 foreach (var question in questions)
                 {
                     quiz.AddQuestion(question.Statement, question.CorrectAnswer, question.Option1, question.Option2, question.Option3);
                 }
-
-                Console.WriteLine("Quiz loaded successfully!");
 
                 PlayQuiz playQuiz = new PlayQuiz();
                 playQuiz.LoadQuiz(quiz);
@@ -81,7 +71,7 @@ namespace QuizTime
 
                 quizWindow.Closed += QuizWindow_Closed;
 
-                this.Hide();
+                Hide();
                 quizWindow.Show();
             }
             catch (Exception ex)
@@ -91,18 +81,13 @@ namespace QuizTime
             }
         }
 
-
-
-
         private void EditQuiz_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                string appName = "MyQuizGame.json";
-                string sourceFilePath = @"C:\Users\Philip\source\repos\QuizTime\QuizTime\" + appName;
+                string sourceFilePath = @"C:\Users\Philip\source\repos\QuizTime\QuizTime\MyQuizGame.json";
                 string destinationFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-
-                string destinationFilePath = System.IO.Path.Combine(destinationFolderPath, appName);
+                string destinationFilePath = System.IO.Path.Combine(destinationFolderPath, "MyQuizGame.json");
 
                 if (!File.Exists(destinationFilePath))
                 {
@@ -113,13 +98,11 @@ namespace QuizTime
                 List<Question> questions = System.Text.Json.JsonSerializer.Deserialize<List<Question>>(jsonData);
 
 
-                QuizTime.DataModel.Quiz quiz = new QuizTime.DataModel.Quiz();
+                Quiz quiz = new Quiz();
                 foreach (var question in questions)
                 {
                     quiz.AddQuestion(question.Statement, question.CorrectAnswer, question.Option1, question.Option2, question.Option3);
                 }
-
-                Console.WriteLine("Quiz loaded successfully for editing!");
 
                 EditQuiz editQuiz = new EditQuiz();
                 editQuiz.LoadQuestions();
