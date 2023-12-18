@@ -26,9 +26,10 @@ namespace QuizTime
         public EditQuiz()
         {
             InitializeComponent();
-            LoadQuestions(); // Load questions on initialization
+            LoadQuestions(); 
         }
 
+        //Saving changes on a question.
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -43,7 +44,7 @@ namespace QuizTime
                     currentQuestion.CorrectAnswer = txtCorrectAnswer.Text;
 
                     string json = JsonConvert.SerializeObject(loadedQuestions);
-                    File.WriteAllText(GetFilePath(), json); // Save changes to the JSON file
+                    File.WriteAllText(GetFilePath(), json); 
 
                     MessageBox.Show("Question saved successfully!");
                 }
@@ -54,6 +55,7 @@ namespace QuizTime
             }
         }
 
+        //Moving to the previous question.
         private void Previous_Click(object sender, RoutedEventArgs e)
         {
             if (currentQuestionIndex > 0)
@@ -63,6 +65,7 @@ namespace QuizTime
             }
         }
 
+        //Moving to the next question.
         private void Next_Click(object sender, RoutedEventArgs e)
         {
             if (currentQuestionIndex < loadedQuestions.Count - 1)
@@ -72,6 +75,7 @@ namespace QuizTime
             }
         }
 
+        //Loading the jsonfile questions.
         public void LoadQuestions()
         {
             try
@@ -92,6 +96,7 @@ namespace QuizTime
             }
         }
 
+        //Displaying the questions.
         private void LoadAndDisplayCurrentQuestion()
         {
             if (currentQuestionIndex >= 0 && currentQuestionIndex < loadedQuestions.Count)
@@ -108,12 +113,14 @@ namespace QuizTime
             }
         }
 
+        //Finding the file path where the file is located at.
         private string GetFilePath()
         {
             string appName = "MyQuizGame.json";
             return System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), appName);
         }
 
+        //Quit button functions.
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             Window parentWindow = Window.GetWindow(this);

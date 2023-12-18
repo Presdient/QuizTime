@@ -1,48 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using QuizTime.DataModel;
-using System.IO;
-using Newtonsoft.Json;
-using JsonNetSerializer = Newtonsoft.Json.JsonSerializer;
-using SystemTextJsonSerializer = System.Text.Json.JsonSerializer;
-using System.Linq.Expressions;
 
 namespace QuizTime
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private Quiz quiz;
-        private Window quizWindow;
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
+        //Starting the quiz and loading the questions.
         private void StartQuiz_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                string appDirectory = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                string quizFilePath = System.IO.Path.Combine(appDirectory, "MyQuizGame.json");
+                string appDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                string quizFilePath = Path.Combine(appDirectory, "MyQuizGame.json");
 
                 string appDataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                string destinationFilePath = System.IO.Path.Combine(appDataFolderPath, "MyQuizGame.json");
+                string destinationFilePath = Path.Combine(appDataFolderPath, "MyQuizGame.json");
 
                 if (!File.Exists(destinationFilePath))
                 {
@@ -52,16 +36,14 @@ namespace QuizTime
                 else
                 {
                     string jsonData = File.ReadAllText(destinationFilePath);
-                    List<Question> questions = System.Text.Json.JsonSerializer.Deserialize<List<Question>>(jsonData);
+                    List<Question> questions = JsonSerializer.Deserialize<List<Question>>(jsonData);
 
-                    // Proceed with loading the quiz using 'questions'
                     Quiz quiz = new Quiz();
                     foreach (var question in questions)
                     {
                         quiz.AddQuestion(question.Statement, question.CorrectAnswer, question.Option1, question.Option2, question.Option3);
                     }
 
-                    // Example: Load the quiz questions into your PlayQuiz window
                     PlayQuiz playQuiz = new PlayQuiz();
                     playQuiz.LoadQuiz(quiz);
 
@@ -86,35 +68,32 @@ namespace QuizTime
             }
         }
 
-
-
+        //Editing the quiz and loading the questions.
         private void EditQuiz_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 string appDataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                string destinationFilePath = System.IO.Path.Combine(appDataFolderPath, "MyQuizGame.json");
+                string destinationFilePath = Path.Combine(appDataFolderPath, "MyQuizGame.json");
 
                 if (!File.Exists(destinationFilePath))
                 {
-                    string appDirectory = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                    string quizFilePath = System.IO.Path.Combine(appDirectory, "MyQuizGame.json");
+                    string appDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                    string quizFilePath = Path.Combine(appDirectory, "MyQuizGame.json");
 
                     File.Copy(quizFilePath, destinationFilePath);
                     MessageBox.Show("Quiz file created in AppData\\Local.");
                 }
 
                 string jsonData = File.ReadAllText(destinationFilePath);
-                List<Question> questions = System.Text.Json.JsonSerializer.Deserialize<List<Question>>(jsonData);
+                List<Question> questions = JsonSerializer.Deserialize<List<Question>>(jsonData);
 
-                // Proceed with loading the quiz for editing using 'questions'
                 Quiz quiz = new Quiz();
                 foreach (var question in questions)
                 {
                     quiz.AddQuestion(question.Statement, question.CorrectAnswer, question.Option1, question.Option2, question.Option3);
                 }
 
-                // Example: Load the edit window with quiz questions
                 EditQuiz editQuiz = new EditQuiz();
                 editQuiz.LoadQuestions();
 
@@ -135,11 +114,8 @@ namespace QuizTime
             catch (Exception ex)
             {
                 MessageBox.Show("Error loading quiz for editing: " + ex.Message);
-                Console.WriteLine("Error loading quiz for editing: " + ex.Message);
             }
         }
-
-
 
         private void QuizWindow_Closed(object sender, EventArgs e)
         {

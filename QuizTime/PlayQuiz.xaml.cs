@@ -32,6 +32,7 @@ namespace QuizTime
             btnNext.IsEnabled = false;  
         }
 
+        //Button submit functions.
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
             if (!answerSubmitted)
@@ -92,7 +93,7 @@ namespace QuizTime
         }
 
 
-
+        //Moving to the next question.
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
             if (currentQuiz != null && currentQuestionIndex < currentQuiz.Questions.Count() - 1)
@@ -131,6 +132,7 @@ namespace QuizTime
             quizInfo.Text = $"Question: {questions + 1}/{questionsPerSession}, Correct Answers: {correctAnswersCount}";
         }
 
+        //Showing the result of the quiz.
         private void ShowQuizResult()
         {
             MessageBox.Show($"You got a score of {correctAnswersCount} out of {questionsAnswered}.", "Quiz Result");
@@ -146,6 +148,7 @@ namespace QuizTime
             }
         }
 
+        //Loading the quiz.
         public void LoadQuiz(QuizTime.DataModel.Quiz quiz)
         {
             currentQuiz = quiz;
@@ -154,6 +157,7 @@ namespace QuizTime
             LoadQuestion(currentQuestionIndex);
         }
 
+        //Loading the questions.
         public void LoadQuestion(int index)
         {
             if (currentQuiz != null && index >= 0 && index < questionIndices.Count())
@@ -185,6 +189,7 @@ namespace QuizTime
             }
         }
 
+        //Moves to next random question.
         private void GenerateNewQuestions()
         {
             if (currentQuiz != null)
@@ -196,7 +201,7 @@ namespace QuizTime
             }
         }
 
-
+        //Resets the quiz if you play again.
         private void ResetQuiz()
         {
             currentQuestionIndex = 0;
@@ -210,6 +215,7 @@ namespace QuizTime
             answerSubmitted = false;
         }
 
+        //Returning to main menu.
         private void ReturnToMainMenu()
         {
             MainWindow mainWindow = new MainWindow();
@@ -218,6 +224,7 @@ namespace QuizTime
             Window.GetWindow(this).Close();
         }
 
+        //Finishes the quiz.
         private void btnFinishQuiz_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Are you sure that you want to finish the quiz?", "Finish Quiz", MessageBoxButton.YesNo);
@@ -231,6 +238,7 @@ namespace QuizTime
             }
         }
 
+        //Also returns to the main menu but it is used to quit the quiz.
         private void btnExitQuiz_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Are you sure that you want to exit the quiz?", "Exit Quiz", MessageBoxButton.YesNo, MessageBoxImage.Question);
