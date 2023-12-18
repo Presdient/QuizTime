@@ -92,25 +92,29 @@ namespace QuizTime
         {
             try
             {
-                string sourceFilePath = @"C:\Users\Philip\source\repos\QuizTime\QuizTime\";
-                string destinationFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                string destinationFilePath = System.IO.Path.Combine(destinationFolderPath, "MyQuizGame.json");
+                string appDataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                string destinationFilePath = System.IO.Path.Combine(appDataFolderPath, "MyQuizGame.json");
 
                 if (!File.Exists(destinationFilePath))
                 {
-                    File.Copy(sourceFilePath, destinationFilePath);
+                    string appDirectory = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                    string quizFilePath = System.IO.Path.Combine(appDirectory, "MyQuizGame.json");
+
+                    File.Copy(quizFilePath, destinationFilePath);
+                    MessageBox.Show("Quiz file created in AppData\\Local.");
                 }
 
                 string jsonData = File.ReadAllText(destinationFilePath);
                 List<Question> questions = System.Text.Json.JsonSerializer.Deserialize<List<Question>>(jsonData);
 
-
+                // Proceed with loading the quiz for editing using 'questions'
                 Quiz quiz = new Quiz();
                 foreach (var question in questions)
                 {
                     quiz.AddQuestion(question.Statement, question.CorrectAnswer, question.Option1, question.Option2, question.Option3);
                 }
 
+                // Example: Load the edit window with quiz questions
                 EditQuiz editQuiz = new EditQuiz();
                 editQuiz.LoadQuestions();
 
@@ -134,6 +138,7 @@ namespace QuizTime
                 Console.WriteLine("Error loading quiz for editing: " + ex.Message);
             }
         }
+
 
 
         private void QuizWindow_Closed(object sender, EventArgs e)
