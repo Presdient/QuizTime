@@ -38,33 +38,34 @@ namespace QuizTime
         {
             try
             {
-                string sourceFilePath = $@"C:\Users\{Environment.UserName}\source\repos\QuizTime\QuizTime\MyQuizGame.json"; // Dynamic path including the current user's name
-                string destinationFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                string destinationFilePath = System.IO.Path.Combine(destinationFolderPath, "MyQuizGame.json");
+                string appDirectory = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                string quizFilePath = System.IO.Path.Combine(appDirectory, "MyQuizGame.json");
+
+                string appDataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                string destinationFilePath = System.IO.Path.Combine(appDataFolderPath, "MyQuizGame.json");
 
                 if (!File.Exists(destinationFilePath))
                 {
-                    Directory.CreateDirectory(destinationFolderPath); // Ensure folder exists
-                    File.Copy(sourceFilePath, destinationFilePath);
+                    File.Copy(quizFilePath, destinationFilePath);
+                    MessageBox.Show("Quiz file created in AppData\\Local.");
                 }
-
-                string jsonData = File.ReadAllText(destinationFilePath);
-
-                // Check if the JSON data is valid and not empty
-                if (!string.IsNullOrWhiteSpace(jsonData))
+                else
                 {
-                    List<Question> questions = JsonConvert.DeserializeObject<List<Question>>(jsonData);
+                    string jsonData = File.ReadAllText(destinationFilePath);
+                    List<Question> questions = System.Text.Json.JsonSerializer.Deserialize<List<Question>>(jsonData);
 
-                    quiz = new Quiz();
+                    // Proceed with loading the quiz using 'questions'
+                    Quiz quiz = new Quiz();
                     foreach (var question in questions)
                     {
                         quiz.AddQuestion(question.Statement, question.CorrectAnswer, question.Option1, question.Option2, question.Option3);
                     }
 
+                    // Example: Load the quiz questions into your PlayQuiz window
                     PlayQuiz playQuiz = new PlayQuiz();
                     playQuiz.LoadQuiz(quiz);
 
-                    quizWindow = new Window
+                    Window quizWindow = new Window
                     {
                         Title = "PlayQuiz",
                         Content = playQuiz,
@@ -78,66 +79,54 @@ namespace QuizTime
                     Hide();
                     quizWindow.Show();
                 }
-                else
-                {
-                    MessageBox.Show("Quiz file is empty or contains invalid JSON data.");
-                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error loading quiz: " + ex.Message);
-                Console.WriteLine("Error loading quiz: " + ex.Message);
+                MessageBox.Show("Error: " + ex.Message);
             }
         }
+
+
 
         private void EditQuiz_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                string sourceFilePath = $@"C:\Users\{Environment.UserName}\source\repos\QuizTime\QuizTime\MyQuizGame.json"; // Dynamic path including the current user's name
+                string sourceFilePath = @"C:\Users\Philip\source\repos\QuizTime\QuizTime\";
                 string destinationFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 string destinationFilePath = System.IO.Path.Combine(destinationFolderPath, "MyQuizGame.json");
 
                 if (!File.Exists(destinationFilePath))
                 {
-                    Directory.CreateDirectory(destinationFolderPath); // Ensure folder exists
                     File.Copy(sourceFilePath, destinationFilePath);
                 }
 
                 string jsonData = File.ReadAllText(destinationFilePath);
+                List<Question> questions = System.Text.Json.JsonSerializer.Deserialize<List<Question>>(jsonData);
 
-                // Check if the JSON data is valid and not empty
-                if (!string.IsNullOrWhiteSpace(jsonData))
+
+                Quiz quiz = new Quiz();
+                foreach (var question in questions)
                 {
-                    List<Question> questions = System.Text.Json.JsonSerializer.Deserialize<List<Question>>(jsonData);
-
-                    quiz = new Quiz();
-                    foreach (var question in questions)
-                    {
-                        quiz.AddQuestion(question.Statement, question.CorrectAnswer, question.Option1, question.Option2, question.Option3);
-                    }
-
-                    EditQuiz editQuiz = new EditQuiz();
-                    editQuiz.LoadQuestions();
-
-                    Window editWindow = new Window
-                    {
-                        Title = "Edit Quiz",
-                        Content = editQuiz,
-                        Width = 800,
-                        Height = 450,
-                        WindowStartupLocation = WindowStartupLocation.CenterScreen
-                    };
-
-                    editWindow.Closed += EditWindow_Closed;
-
-                    Hide();
-                    editWindow.Show();
+                    quiz.AddQuestion(question.Statement, question.CorrectAnswer, question.Option1, question.Option2, question.Option3);
                 }
-                else
+
+                EditQuiz editQuiz = new EditQuiz();
+                editQuiz.LoadQuestions();
+
+                Window editWindow = new Window
                 {
-                    MessageBox.Show("Quiz file is empty or contains invalid JSON data.");
-                }
+                    Title = "Edit Quiz",
+                    Content = editQuiz,
+                    Width = 800,
+                    Height = 450,
+                    WindowStartupLocation = WindowStartupLocation.CenterScreen
+                };
+
+                editWindow.Closed += EditWindow_Closed;
+
+                Hide();
+                editWindow.Show();
             }
             catch (Exception ex)
             {
