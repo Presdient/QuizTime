@@ -38,7 +38,7 @@ namespace QuizTime
         {
             try
             {
-                string sourceFilePath = @"C:\Users\Philip\source\repos\QuizTime\QuizTime\MyQuizGame.json"; // Ensure this points to the correct JSON file
+                string sourceFilePath = $@"C:\Users\{Environment.UserName}\source\repos\QuizTime\QuizTime\MyQuizGame.json"; // Dynamic path including the current user's name
                 string destinationFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 string destinationFilePath = System.IO.Path.Combine(destinationFolderPath, "MyQuizGame.json");
 
@@ -94,7 +94,7 @@ namespace QuizTime
         {
             try
             {
-                string sourceFilePath = @"C:\Users\Philip\source\repos\QuizTime\QuizTime\MyQuizGame.json";
+                string sourceFilePath = $@"C:\Users\{Environment.UserName}\source\repos\QuizTime\QuizTime\MyQuizGame.json"; // Dynamic path including the current user's name
                 string destinationFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 string destinationFilePath = System.IO.Path.Combine(destinationFolderPath, "MyQuizGame.json");
 
