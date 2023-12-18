@@ -44,14 +44,14 @@ namespace QuizTime
 
                 if (!File.Exists(destinationFilePath))
                 {
+                    Directory.CreateDirectory(destinationFolderPath); // Ensure folder exists
                     File.Copy(sourceFilePath, destinationFilePath);
                 }
 
                 string jsonData = File.ReadAllText(destinationFilePath);
                 List<Question> questions = System.Text.Json.JsonSerializer.Deserialize<List<Question>>(jsonData);
 
-
-                Quiz quiz = new Quiz();
+                quiz = new Quiz();
                 foreach (var question in questions)
                 {
                     quiz.AddQuestion(question.Statement, question.CorrectAnswer, question.Option1, question.Option2, question.Option3);
@@ -60,7 +60,7 @@ namespace QuizTime
                 PlayQuiz playQuiz = new PlayQuiz();
                 playQuiz.LoadQuiz(quiz);
 
-                Window quizWindow = new Window
+                quizWindow = new Window
                 {
                     Title = "PlayQuiz",
                     Content = playQuiz,
@@ -91,14 +91,14 @@ namespace QuizTime
 
                 if (!File.Exists(destinationFilePath))
                 {
+                    Directory.CreateDirectory(destinationFolderPath); // Ensure folder exists
                     File.Copy(sourceFilePath, destinationFilePath);
                 }
 
                 string jsonData = File.ReadAllText(destinationFilePath);
                 List<Question> questions = System.Text.Json.JsonSerializer.Deserialize<List<Question>>(jsonData);
 
-
-                Quiz quiz = new Quiz();
+                quiz = new Quiz();
                 foreach (var question in questions)
                 {
                     quiz.AddQuestion(question.Statement, question.CorrectAnswer, question.Option1, question.Option2, question.Option3);
@@ -127,7 +127,6 @@ namespace QuizTime
                 Console.WriteLine("Error loading quiz for editing: " + ex.Message);
             }
         }
-
 
         private void QuizWindow_Closed(object sender, EventArgs e)
         {
